@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import axios from 'axios';
-import { Button, Form, FormGroup, Label, Input, Col, FormFeedback} from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Col, NavbarBrand, Navbar} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
 import { contains } from "dom-helpers";
@@ -74,6 +74,17 @@ class Upload extends Component {
     render() {
         return(
             <div className='background'>
+                <Navbar dark >
+        			<div className="container">
+						<div className='row'>
+							<div className='col-6'>
+								<NavbarBrand className="mr-auto" href="/">
+									<img src="assets/images/logo.png" height = "100%" width ="100%" alt="expolab"/>
+								</NavbarBrand>
+							</div>
+                        </div>
+                    </div>
+                </Navbar>
                 <div className='container'>
                     <div className='row row-content'>
                         <div className='col-12'>
