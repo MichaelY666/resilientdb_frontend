@@ -74,12 +74,12 @@ class Login extends Component {
 							</div>
 							<div className='col-6'>
 								<Nav className="ml-auto row">
-									<NavItem className='col-3 float-right'>
+									<NavItem className='col-6 float-right'>
 										<Button primary outline onClick={this.toggleLoginModal}>
 										<FontAwesomeIcon icon={faHandPointRight} /> Login
 										</Button>
 									</NavItem>
-									<NavItem className='col-3 float-right'>
+									<NavItem className='col-6 float-right'>
 										<Button primary outline onClick={this.toggleSignupModal}>
 										<FontAwesomeIcon icon={faUserAlt} />   Sign Up
 										</Button>
