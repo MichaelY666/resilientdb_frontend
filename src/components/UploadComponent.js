@@ -41,6 +41,14 @@ class Upload extends Component {
         
         // Details of the uploaded file
         console.log(this.state.selectedFile);
+
+        //create hash value for uploaded file 
+        const crypto = require('crypto');
+        const hash = crypto.createHash('sha256');
+        const hex = hash.update(this.state.selectedFile).digest('hex');
+
+        console.log(hex);
+
         
         // Request made to the backend api
         // Send formData object
