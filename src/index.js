@@ -1,9 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+//import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.css';
+// styles
+import "./assets/css/bootstrap.min.css";
+import "./assets/css/now-ui-kit.css";
+import "./assets/css/now-ui-kit.min.css";
+import "./assets/css/now-ui-kit.css.map";
+import "./assets/demo/demo.css";
+//import 'bootstrap/dist/css/bootstrap.css';
 
 ReactDOM.render(
   <React.StrictMode>
