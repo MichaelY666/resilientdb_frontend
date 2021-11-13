@@ -11,9 +11,18 @@ import "./assets/css/now-ui-kit.css.map";
 import "./assets/demo/demo.css";
 //import 'bootstrap/dist/css/bootstrap.css';
 
+import store from './store';
+import {Provider} from 'react-redux';
+
+
+
+
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

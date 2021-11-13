@@ -23,6 +23,7 @@ function LandingPage() {
     e.preventDefault();
 		if (e.target.first_password.value === e.target.repeat_password.value)
 			alert("Username: " + e.target.username.value + "Password: " + e.target.first_password.value);
+      
 		else
 			alert("The two password value must be the same!");
     toggleSignup(!signupOpen);
