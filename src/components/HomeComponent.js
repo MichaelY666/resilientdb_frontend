@@ -1,42 +1,15 @@
 import React, { useState } from "react";
-import IsoTopeGrid from "react-isotope";
+import FileList from "./FileList";
  
 
 // reactstrap components
 import { Container } from "reactstrap";
+import { Row } from "react-bootstrap";
 
 // core components
 
 function Home() {
   let pageHeader = React.createRef();
-  const [filters, updateFilters] = useState(
-    [
-      { "label": "all", "isChecked": true },
-      { "label": "test", "isChecked": false },
-      { "label": "test1", "isChecked": false },
-      { "label": "chart", "isChecked": false },
-      { "label": "tile", "isChecked": false }
-    ]
-  );
-
-  // Filter change handler
-  const onFilter = event => {
-    const {
-      target: { value, checked }
-    } = event;
- 
-    updateFilters(state =>
-      state.map(f => {
-        if (f.label === value) {
-          return {
-            ...f,
-            isChecked: checked
-          };
-        }
-        return f;
-      })
-    );
-  };
 
   React.useEffect(() => {
     if (window.innerWidth > 991) {
@@ -54,7 +27,7 @@ function Home() {
   return (
     <>
       <div
-        className="page-header clear-filter page-header-small"
+        className="page-header clear-filter page-header-large"
         filter-color="blue"
       >
         <div
@@ -78,23 +51,8 @@ function Home() {
           </div>
           <h3 className="title">Ryan Scheinder</h3>
           <p className="category">Welcome</p>
-          <div className="content row">
-            <div className="social-description col-3">
-              <h2>48</h2>
-              <p>All Files</p>
-            </div>
-            <div className="social-description col-3">
-              <h2>24</h2>
-              <p>Original</p>
-            </div>
-            <div className="social-description col-3">
-              <h2>24</h2>
-              <p>Verified</p>
-            </div>
-            <div className="social-description col-3">
-              <h2>0</h2>
-              <p>Pending</p>
-            </div>
+          <div className="content">
+            <FileList/>
           </div>
         </Container>
       </div>
