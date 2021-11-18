@@ -24,11 +24,14 @@ function Home() {
       };
     }
   });
+
+  
   return (
     <>
       <div
         className="page-header clear-filter page-header-large"
         filter-color="blue"
+        
       >
         <div
           className="page-header-image"

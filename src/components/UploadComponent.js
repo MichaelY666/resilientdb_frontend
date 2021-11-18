@@ -1,9 +1,10 @@
 import React, {Component} from "react";
 import axios from 'axios';
-import { Button, Form, FormGroup, Label, Input, Col, NavbarBrand, Navbar} from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Col, Row} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
 import { contains } from "dom-helpers";
+import { Container } from "react-bootstrap";
 
 
 class Upload extends Component {
@@ -68,9 +69,9 @@ class Upload extends Component {
         if (this.state.selectedFile) {
             return (
               <div>
-                <h2>File Details:</h2> 
-                    <p>File Name: {this.state.selectedFile.name}</p>           
-                    <p>File Type: {this.state.selectedFile.type}</p>
+                <h2 style={{color: "white"}}>File Details:</h2> 
+                    <h3 style={{color: "white"}}>File Name: {this.state.selectedFile.name}</h3>           
+                    <h3 style={{color: "white"}}>File Type: {this.state.selectedFile.type}</h3>
                     <br/>     
               </div>
             );
@@ -81,30 +82,30 @@ class Upload extends Component {
 
     render() {
         return(
-            <div className='background'>
-                <Navbar dark >
-        			<div className="container">
-						<div className='row'>
-							<div className='col-6'>
-								<NavbarBrand className="mr-auto" href="/">
-									<img src="assets/images/logo.png" height = "100%" width ="100%" alt="expolab"/>
-								</NavbarBrand>
-							</div>
-                        </div>
-                    </div>
-                </Navbar>
-                <div className='container'>
+            <div style={{
+                backgroundImage:
+                  "url(" + require("../assets/img/bg1.jpg").default + ")",
+                  height: 900
+              }}
+              
+              >
+                
+                <div className='container' >
+                <img center src="assets/images/logo.png" height = "50%" width ="50%" alt="expolab"/>
                     <div className='row row-content'>
                         <div className='col-12'>
-                            <h1>Upload Your File Here:</h1>
+                            <h1 style={{color: "pink"}}>Upload Your File Here:</h1>
                         </div>
                         <div className='col-12 col-md-9'>
                             <Form>
-                                <FormGroup row>
-                                    <Input type="file" onChange={this.onFileChange} />
-                                    <Button onClick={this.onFileUpload} color='primary' type='submit'>
+                                <FormGroup>
+                                    <Container>
+                                    <Row><Input type="file" onChange={this.onFileChange} className="form-control-lg" placeholder="no file selected" style={{color: "white", fontSize: 30}}/></Row>
+                                    <Row></Row>
+                                    <Row><Button onClick={this.onFileUpload} color='secondary' type='submit' style={{color: "white", fontSize: 30}}>
                                     Upload
-                                    </Button>
+                                    </Button></Row>
+                                    </Container>
                                 </FormGroup>
                                     {this.fileData()}
                             </Form>

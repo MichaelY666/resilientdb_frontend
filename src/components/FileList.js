@@ -69,14 +69,10 @@ function FileList(){
         })
       );
     };
+
   
     return (
         <div>
-        {/* <div className="filter-container" style={{
-            "background-color": "transparent",
-            "border": "none",
-            "outline": "none"
-        }}> */}
         <Container>
             <Row>
                 {filters.map(f => (
@@ -90,14 +86,15 @@ function FileList(){
                                 onChange={onFilter}
                                 checked={f.isChecked}
                                 className="form-control-lg"
+              
                             />
-                            <Label  check className="form-control-lg" htmlFor={f.label}>{f.label}</Label>
+                            <Label className="form-control-lg" htmlFor={f.label} style={{fontSize: 25, color: "white", textAlign: 'center', backgroundColor: "grey"}}>{f.label}</Label>
                         </div>
                         </FormGroup>
                     </Col>
                 ))}
             </Row>
-
+          
         <IsoTopeGrid
           gridLayout={cardsDefault}
           noOfCols={2}
@@ -116,6 +113,7 @@ function FileList(){
             </Card>
           ))}
         </IsoTopeGrid>
+        
       </Container>
     </div>
   );
