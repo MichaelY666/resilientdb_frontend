@@ -6,7 +6,6 @@
 .row-content {
   margin:0px auto;
   padding: 50px 0px 50px 0px;
-  border-bottom: 1px ridge;
   min-height:400px;
 }
 
@@ -28,5 +27,19 @@
 }
 
 .background {
-  background-color: #9575CD;
+  background-color: #b49ddd;
+  height: 100vh;
+  width: 100vw;
+}
+
+#profileImage {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #09003f;
+  font-size: 80px;
+  color: rgb(166, 255, 255);
+  text-align: center;
+  line-height: 150px;
+  margin: 20px auto;
 }
