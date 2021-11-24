@@ -1,32 +1,44 @@
-.row-header{
-  margin:0px auto;
-  padding:0px auto;
+.row-header {
+  margin: 0px auto;
+  padding: 0px auto;
 }
 
 .row-content {
-  margin:0px auto;
+  margin: 0px auto;
   padding: 50px 0px 50px 0px;
-  border-bottom: 1px ridge;
-  min-height:400px;
+  min-height: 400px;
 }
 
-.footer{
-  background-color: #D1C4E9;
-  margin:0px auto;
+.footer {
+  background-color: #d1c4e9;
+  margin: 0px auto;
   padding: 20px 0px 20px 0px;
 }
 .jumbotron {
-  padding:70px 30px 70px 30px;
-  margin:0px auto;
-  background: #9575CD ;
-  color:#9575CD;
+  padding: 70px 30px 70px 30px;
+  margin: 0px auto;
+  background: #9575cd;
+  color: #9575cd;
 }
 
-
 .navbar-dark {
-  background-color: #9575CD;
+  background-color: #9575cd;
 }
 
 .background {
-  background-color: #9575CD;
+  background-color: #b49ddd;
+  height: 100vh;
+  width: 100vw;
+}
+
+#profileImage {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #09003f;
+  font-size: 80px;
+  color: rgb(166, 255, 255);
+  text-align: center;
+  line-height: 150px;
+  margin: 20px auto;
 }

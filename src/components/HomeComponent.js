@@ -1,66 +1,133 @@
-import React, { useState } from "react";
-import FileList from "./FileList";
- 
+import React, { Component, useState } from "react";
+import axios from "axios";
 
 // reactstrap components
 import { Container } from "reactstrap";
 import { Row } from "react-bootstrap";
+import DocCard from "./DocCard";
 
 // core components
 
-function Home() {
-  let pageHeader = React.createRef();
+class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.profileImage = React.createRef();
+    this.state = { activePane: "verified", docData: [] };
+  }
 
-  React.useEffect(() => {
-    if (window.innerWidth > 991) {
-      const updateScroll = () => {
-        let windowScrollTop = window.pageYOffset / 3;
-        pageHeader.current.style.transform =
-          "translate3d(0," + windowScrollTop + "px,0)";
-      };
-      window.addEventListener("scroll", updateScroll);
-      return function cleanup() {
-        window.removeEventListener("scroll", updateScroll);
-      };
-    }
-  });
+  componentDidMount() {
+    let intials = localStorage.getItem("name").charAt(0);
+    this.profileImage.current.innerHTML = intials;
+    const headers = {
+      "Content-Type": "application/json",
+      "x-access-token": localStorage.getItem("token"),
+    };
+    axios
+      .get("http://localhost:3001/document/user", { headers: headers })
+      .then((response) => {
+        this.setState({ docData: response.data });
+        console.log(response);
+      });
+  }
 
-  
-  return (
-    <>
-      <div
-        className="page-header clear-filter page-header-large"
-        filter-color="blue"
-        
-      >
+  changePane = (e) => {
+    this.setState({ activePane: e.target.id });
+  };
+
+  render() {
+    return (
+      <>
         <div
-          className="page-header-image"
-          style={{
-            backgroundImage:
-              "url(" + require("../assets/img/bg5.jpg").default + ")",
-          }}
-          ref={pageHeader}
-        ></div>
-        <Container>
-          <div className="photo-container" style={{
-            'width': '123px',
-            'height': '123px',
-            'border-radius': '50%',
-            'overflow': 'hidden',
-            'margin': '0 auto',
-            'box-shadow': '0 10px 25px 0 rgba(0,0,0,.3)'
-          }}>
-            <img alt="..." src={require("../assets/img/ryan.jpg").default}></img>
-          </div>
-          <h3 className="title">Ryan Scheinder</h3>
-          <p className="category">Welcome</p>
-          <div className="content">
-            <FileList/>
-          </div>
-        </Container>
-      </div>
-    </>
-  );
+          className="page-header clear-filter page-header-large"
+          filter-color="blue"
+          style={{ maxHeight: "100%" }}
+        >
+          <div
+            className="page-header-image"
+            style={{
+              backgroundImage:
+                "url(" + require("../assets/img/bg5.jpg").default + ")",
+              backgroundRepeat: "no-repeat",
+              backgroundAttachment: "fixed",
+            }}
+          ></div>
+          <Container>
+            <div id="profileImage" ref={this.profileImage}></div>
+            <h3 className="title">{localStorage.getItem("name")}</h3>
+            <p className="category">Welcome</p>
+            <div className="content">
+              <ul
+                className="nav nav-pills nav-fill justify-content-center nav-pills-info"
+                id="myTab"
+                role="tablist"
+                style={{ marginBottom: "32px" }}
+              >
+                <li className="nav-item">
+                  <a
+                    className={
+                      this.state.activePane == "verified"
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    onClick={this.changePane}
+                    id="verified"
+                    role="tab"
+                  >
+                    Verified
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className={
+                      this.state.activePane == "pending"
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    onClick={this.changePane}
+                    id="pending"
+                    role="tab"
+                  >
+                    Pending
+                  </a>
+                </li>
+              </ul>
+
+              <div className="tab-content">
+                <div
+                  className={
+                    this.state.activePane == "verified"
+                      ? "tab-pane active"
+                      : "tab-pane"
+                  }
+                  id="verified-panel"
+                  role="tabpanel"
+                >
+                  <ul>
+                    {this.state.docData.map((item) => (
+                      <DocCard docData={item} />
+                    ))}
+                  </ul>
+                </div>
+                <div
+                  className={
+                    this.state.activePane == "pending"
+                      ? "tab-pane active"
+                      : "tab-pane"
+                  }
+                  id="pending-panel"
+                  role="tabpanel"
+                >
+                  pending
+                </div>
+              </div>
+
+              {/* <FileList/> */}
+            </div>
+          </Container>
+        </div>
+      </>
+    );
+  }
 }
 
 export default Home;

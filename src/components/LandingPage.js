@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
-
+import { useHistory } from "react-router-dom";
 // reactstrap components
 import {Container, Navbar,NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, Label} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArchway, faHandPointRight, faUserAlt } from '@fortawesome/free-solid-svg-icons'
+const axios = require('axios').default;
 
 // core components
 
@@ -12,21 +13,51 @@ function LandingPage() {
   let pageHeader = React.createRef();
   const [loginOpen, setLogin] = useState(false);
   const [signupOpen, setSignup] = useState(false);
+  let history = useHistory();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    alert("Username: " + e.target.username.value + "Password: " + e.target.password.value + "Remember: " + e.target.remember.checked);
-    toggleLogin(!loginOpen);
+    axios.post('http://localhost:3001/auth/login', 
+        {
+          email: e.target.email.value,
+          password: e.target.password.value
+          })
+        .then(function (response) {
+          console.log(response);
+          toggleLogin(!loginOpen);
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('name', response.data.first_name+" "+response.data.last_name);
+          history.push("/home");
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert(error);
+        });
   } 
 
   const handleSignup = (e) => {
     e.preventDefault();
 		if (e.target.first_password.value === e.target.repeat_password.value)
-			alert("Username: " + e.target.username.value + "Password: " + e.target.first_password.value);
+      {
+        axios.post('http://localhost:3001/auth/register', 
+        {
+          first_name: e.target.first_name.value,
+          last_name: e.target.last_name.value,
+          email: e.target.email.value,
+          password: e.target.first_password.value
+          })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert(error);
+        });
+        toggleSignup(!signupOpen);
+    }
       
 		else
 			alert("The two password value must be the same!");
-    toggleSignup(!signupOpen);
   }
 
   const toggleLogin = () => {
@@ -71,14 +102,13 @@ function LandingPage() {
                 <div className='col-2'></div>
                 <div className='col-8'>
                     <NavbarBrand className="mr-auto" href="/">
-                        <img src="assets/images/logo.png" height = "100%" width ="100%" alt="expolab"/>
+                        <img src="assets/images/logo.png" height = "100%" width ="100%" alt="ResilientDoc"/>
                     </NavbarBrand>
                 </div>
                 <div className='col-2'></div>
             </div>
-            <h1 className="title">Document Verifier (Beta v1.0)</h1>
-            <h2>We verify document originality and keep a record for you 
-                                      so that there's no hassles in the future! :) </h2>
+            <h3>We verify document originality and keep a record for you 
+                                      so that there are no hassles in the future!</h3>
             <div className="text-center">
               <Button
                 className=" btn-round btn-lg"
@@ -105,6 +135,7 @@ function LandingPage() {
                 <FontAwesomeIcon icon={faArchway} />   Logout
               </Button> */}
             </div>
+            <h4 className="title">(Beta v1.0)</h4>
           </Container>
         </div>
       </div>
@@ -113,8 +144,8 @@ function LandingPage() {
                 <ModalBody>
                   <Form onSubmit={handleLogin}>
                     <FormGroup>
-                      <Label htmlFor="username">Username</Label>
-                      <Input type="text" id="username" name="username" /> 
+                      <Label htmlFor="email">Email</Label>
+                      <Input type="email" id="email" name="email" /> 
                     </FormGroup>
                     <FormGroup>
                       <Label htmlFor="password">Password</Label>
@@ -138,16 +169,24 @@ function LandingPage() {
                 <ModalBody>
                   <Form onSubmit={handleSignup}>
                     <FormGroup>
-                      <Label htmlFor="username">Username</Label>
-                      <Input type="text" id="username" name="username" /> 
+                      <Label htmlFor="first_name">First Name</Label>
+                      <Input type="text" id="first_name" name="first_name" /> 
+                    </FormGroup>
+                    <FormGroup>
+                      <Label htmlFor="last_name">Last Name</Label>
+                      <Input type="text" id="last_name" name="last_name" /> 
+                    </FormGroup>
+                    <FormGroup>
+                      <Label htmlFor="email">Email</Label>
+                      <Input type="email" id="email" name="email" /> 
                     </FormGroup>
                     <FormGroup>
                       <Label htmlFor="first_password">Password</Label>
-                      <Input type="first_password" id="first_password" name="first_password" /> 
+                      <Input type="password" id="first_password" name="first_password" /> 
                     </FormGroup>
                     <FormGroup>
                       <Label htmlFor="repeat_password">Repeat Password</Label>
-                      <Input type="repeat_password" id="repeat_password" name="repeat_password" /> 
+                      <Input type="password" id="repeat_password" name="repeat_password" /> 
                     </FormGroup>
                     <Button type="submit" value="submit" color="primary">Sign Up</Button>
                   </Form>
