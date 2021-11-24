@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import './index.css';
+import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 // styles
@@ -9,7 +9,7 @@ import "./assets/css/now-ui-kit.css";
 import "./assets/css/now-ui-kit.min.css";
 import "./assets/css/now-ui-kit.css.map";
 import "./assets/demo/demo.css";
-//import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 
 import store from './store';
 import {Provider} from 'react-redux';
