@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 // reactstrap components
 import {Container, Navbar,NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, Label} from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArchway, faHandPointRight, faUserAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArchway, faHandPointRight, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 const axios = require('axios').default;
 
 // core components

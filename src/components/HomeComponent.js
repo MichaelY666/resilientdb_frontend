@@ -1,8 +1,9 @@
 import React, { Component, useState } from "react";
 import axios from "axios";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFolderPlus } from '@fortawesome/free-solid-svg-icons';
 // reactstrap components
-import { Container } from "reactstrap";
+import { Button, Container } from "reactstrap";
 import { Row } from "react-bootstrap";
 import DocCard from "./DocCard";
 
@@ -55,6 +56,10 @@ class Home extends Component {
             <div id="profileImage" ref={this.profileImage}></div>
             <h3 className="title">{localStorage.getItem("name")}</h3>
             <p className="category">Welcome</p>
+            <Button color="secondary" href="/upload" className=" btn-round btn-lg">
+              <FontAwesomeIcon icon={faFolderPlus} size="3x" />  
+              <div className="h4">Upload New File</div>
+            </Button>
             <div className="content">
               <ul
                 className="nav nav-pills nav-fill justify-content-center nav-pills-info"

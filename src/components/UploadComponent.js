@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Button,
   Form,
@@ -9,12 +11,17 @@ import {
   Col,
   NavbarBrand,
   Navbar,
+  Nav,
+  NavItem,
+  NavLink
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
 import { contains, width } from "dom-helpers";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 class Upload extends Component {
   constructor(props) {
@@ -54,6 +61,7 @@ class Upload extends Component {
       });
   }
 
+
   // On file upload (click the upload button)
   onFileChange(event) {
     // Update the state
@@ -62,6 +70,7 @@ class Upload extends Component {
 
   // On file upload (click the upload button)
   onFileUpload(e) {
+    toast("File Uploaded Successfully!");
     e.preventDefault();
     if (this.state.mode == "create") {
       // Create an object of formData
@@ -202,7 +211,8 @@ class Upload extends Component {
   render() {
     return (
       <div className="background">
-        <Navbar dark>
+        <Navbar className="bg-dark" expand="lg">
+          <ToastContainer/>
           <div className="container">
             <div className="row">
               <div className="col-6">
@@ -215,6 +225,14 @@ class Upload extends Component {
                   />
                 </NavbarBrand>
               </div>
+            <Nav className="ml-auto" navbar>
+              <NavItem className="active">
+                <NavLink href="/home">
+                <FontAwesomeIcon icon={faHome} size="3x" /> 
+                  <p>Home Page</p>
+                </NavLink>
+              </NavItem>
+            </Nav>
             </div>
           </div>
         </Navbar>
