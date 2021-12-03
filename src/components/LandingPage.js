@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import swal from "sweetalert";
 // reactstrap components
 import {
   Container,
@@ -55,7 +56,11 @@ function LandingPage() {
       })
       .catch(function (error) {
         console.log(error);
-        alert(error);
+        swal({
+          title: "Error",
+          text: error.message,
+          icon: "error",
+        });
       });
   };
 
@@ -74,10 +79,19 @@ function LandingPage() {
         })
         .catch(function (error) {
           console.log(error);
-          alert(error);
+          swal({
+            title: "Error",
+            text: error.message,
+            icon: "error",
+          });
         });
       toggleSignup(!signupOpen);
-    } else alert("The two password value must be the same!");
+    } else
+      swal({
+        title: "Error",
+        text: "The two password value must be the same!",
+        icon: "error",
+      });
   };
 
   const toggleLogin = () => {
@@ -87,10 +101,6 @@ function LandingPage() {
   const toggleSignup = () => {
     setSignup(!signupOpen);
   };
-
-  // const handleLogout = () => {
-  //   alert("You're successfully logged out!")
-  // }
 
   React.useEffect(() => {
     if (window.innerWidth > 991) {

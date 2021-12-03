@@ -26,6 +26,7 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import swal from "sweetalert";
 
 class Upload extends Component {
   constructor(props) {
@@ -129,11 +130,19 @@ class Upload extends Component {
             .catch(function (error) {
               console.log(error);
             });
-          alert("File Uploaded Successfully!");
+          swal({
+            title: "Success",
+            text: "File Uploaded Successsfully!",
+            icon: "success",
+          });
         };
         reader.readAsText(file);
       } else {
-        alert("No File Is Selected!");
+        swal({
+          title: "Error",
+          text: "No File Selected",
+          icon: "error",
+        });
       }
     } else {
       if (this.state.newFile) {
@@ -176,7 +185,11 @@ class Upload extends Component {
             .catch(function (error) {
               console.log(error);
             });
-          alert("File Updated Successfully!");
+          swal({
+            title: "Success",
+            text: "File Updated Successsfully!",
+            icon: "success",
+          });
         };
         reader.readAsText(file);
       } else {
@@ -203,7 +216,11 @@ class Upload extends Component {
           .catch(function (error) {
             console.log(error);
           });
-        alert("Users Updated Successfully!");
+        swal({
+          title: "Success",
+          text: "Users Updated Successsfully!",
+          icon: "success",
+        });
       }
     }
   }

@@ -24,6 +24,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+import swal from "sweetalert";
 
 class DocCard extends Component {
   constructor(props) {
@@ -143,14 +144,26 @@ class DocCard extends Component {
         hash.update(e.target.result);
         const hex = hash.digest("hex");
         if (hex == this.props.docData.document_hash) {
-          alert("File is valid");
+          swal({
+            title: "Valid",
+            text: "File is Valid",
+            icon: "success",
+          });
         } else {
-          alert("File is corrupt");
+          swal({
+            title: "Invalid",
+            text: "File is Corrupt",
+            icon: "error",
+          });
         }
       };
       reader.readAsText(file);
     } else {
-      alert("No File Is Selected!");
+      swal({
+        title: "Error",
+        text: "No File Selected",
+        icon: "error",
+      });
     }
   };
 
