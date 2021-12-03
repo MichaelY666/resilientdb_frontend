@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Button,
   Form,
@@ -13,15 +13,20 @@ import {
   Navbar,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  Card,
+  CardBody,
+  CardText,
+  CardTitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
 import { contains, width } from "dom-helpers";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+import swal from "sweetalert";
 
 class Upload extends Component {
   constructor(props) {
@@ -57,10 +62,20 @@ class Upload extends Component {
           this.setState({
             selected: this.props.location.state.associated_users,
           });
+        } else {
+          response.data.forEach((element) => {
+            if (
+              localStorage.getItem("name") ==
+              element.first_name + " " + element.last_name
+            ) {
+              this.setState({
+                selected: [element],
+              });
+            }
+          });
         }
       });
   }
-
 
   // On file upload (click the upload button)
   onFileChange(event) {
@@ -115,11 +130,19 @@ class Upload extends Component {
             .catch(function (error) {
               console.log(error);
             });
-          alert("File Uploaded Successfully!");
+          swal({
+            title: "Success",
+            text: "File Uploaded Successsfully!",
+            icon: "success",
+          });
         };
         reader.readAsText(file);
       } else {
-        alert("No File Is Selected!");
+        swal({
+          title: "Error",
+          text: "No File Selected",
+          icon: "error",
+        });
       }
     } else {
       if (this.state.newFile) {
@@ -162,7 +185,11 @@ class Upload extends Component {
             .catch(function (error) {
               console.log(error);
             });
-          alert("File Updated Successfully!");
+          swal({
+            title: "Success",
+            text: "File Updated Successsfully!",
+            icon: "success",
+          });
         };
         reader.readAsText(file);
       } else {
@@ -189,7 +216,11 @@ class Upload extends Component {
           .catch(function (error) {
             console.log(error);
           });
-        alert("Users Updated Successfully!");
+        swal({
+          title: "Success",
+          text: "Users Updated Successsfully!",
+          icon: "success",
+        });
       }
     }
   }
@@ -199,86 +230,110 @@ class Upload extends Component {
   fileData() {
     if (this.state.selectedFile) {
       return (
-        <div>
-          <h2>File Details:</h2>
-          <p>File Name: {this.state.selectedFile.name}</p>
-          <br />
-        </div>
+        <Card body color="dark" inverse>
+          <CardBody>
+            <CardTitle tag="h5">File Details:</CardTitle>
+            <CardText>File Name: {this.state.selectedFile.name}</CardText>
+          </CardBody>
+        </Card>
       );
     }
   }
 
   render() {
     return (
-      <div className="background">
-        <Navbar className="bg-dark" expand="lg">
-          <ToastContainer/>
-          <div className="container">
-            <div className="row">
-              <div className="col-6">
-                <NavbarBrand className="mr-auto" href="/home">
-                  <img
-                    src="assets/images/logo.png"
-                    height="100%"
-                    width="100%"
-                    alt="ResilientDoc"
-                  />
-                </NavbarBrand>
-              </div>
-            <Nav className="ml-auto" navbar>
-              <NavItem className="active">
-                <NavLink href="/home">
-                <FontAwesomeIcon icon={faHome} size="3x" /> 
-                  <p>Home Page</p>
-                </NavLink>
-              </NavItem>
-            </Nav>
-            </div>
-          </div>
+      <div>
+        <Navbar
+          dark
+          expand
+          fixed="top"
+          full
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.52)" }}
+        >
+          <NavbarBrand href="/home">
+            <img
+              src="assets/images/logo.png"
+              height="25%"
+              width="25%"
+              alt="ResilientDoc"
+              style={{ marginTop: "-16px", marginBottom: "-16px" }}
+            />
+          </NavbarBrand>
+          <Nav className="me-auto" navbar>
+            <NavItem>
+              <NavLink href="/home">Home</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/landing">Logout</NavLink>
+            </NavItem>
+          </Nav>
         </Navbar>
-        <div className="container">
-          <div className="row row-content">
-            <div className="col-12">
-              <h1>Upload Your File Here:</h1>
-            </div>
-            <div className="col-12 col-md-9">
-              <Form>
-                <FormGroup>
-                  <Input
-                    id="exampleFile"
-                    type="file"
-                    name="file"
-                    onChange={this.onFileChange}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Typeahead
-                    id="typeahead"
-                    options={this.state.userData}
-                    labelKey={(option) =>
-                      `${option.first_name} ${option.last_name}`
-                    }
-                    placeholder="Add users to verify document"
-                    multiple={true}
-                    style={{ width: 100 + "%" }}
-                    onChange={(selected) => {
-                      this.setState({ selected: selected });
-                    }}
-                    selected={this.state.selected}
-                  ></Typeahead>
-                </FormGroup>
-                <FormGroup>
-                  <Button
-                    style={{ backgroundColor: "#4484f3" }}
-                    onClick={this.onFileUpload}
-                    color="primary"
-                    type="submit"
-                  >
-                    Upload
-                  </Button>
-                </FormGroup>
-                <FormGroup>{this.fileData()}</FormGroup>
-              </Form>
+        <div
+          style={{
+            backgroundImage:
+              "url(" +
+              require("../assets/img/pexels-pixabay-261599.jpg").default +
+              ")",
+            backgroundRepeat: "no-repeat",
+            backgroundAttachment: "fixed",
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            height: "100vh",
+            width: "100vw",
+          }}
+        >
+          <div className="container" style={{ textAlign: "center" }}>
+            <div
+              className="row row-content"
+              style={{ justifyContent: "center" }}
+            >
+              <div
+                className="col-12"
+                style={{ marginTop: "80px", color: "white" }}
+              >
+                <h1>Upload Your File Here:</h1>
+              </div>
+              <div className="col-12 col-md-9">
+                <Form>
+                  <FormGroup>
+                    <Input
+                      id="exampleFile"
+                      type="file"
+                      name="file"
+                      onChange={this.onFileChange}
+                      bsSize="lg"
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Typeahead
+                      size="lg"
+                      id="typeahead"
+                      options={this.state.userData}
+                      labelKey={(option) =>
+                        `${option.first_name} ${option.last_name}`
+                      }
+                      placeholder="Add users to verify document"
+                      multiple={true}
+                      style={{ width: "100%", marginTop: "32px" }}
+                      onChange={(selected) => {
+                        this.setState({ selected: selected });
+                      }}
+                      selected={this.state.selected}
+                    ></Typeahead>
+                  </FormGroup>
+                  <FormGroup>
+                    <Button
+                      style={{ backgroundColor: "#4484f3", marginTop: "32px" }}
+                      onClick={this.onFileUpload}
+                      color="primary"
+                      type="submit"
+                    >
+                      Upload
+                    </Button>
+                  </FormGroup>
+                  <FormGroup>{this.fileData()}</FormGroup>
+                </Form>
+              </div>
             </div>
           </div>
         </div>
