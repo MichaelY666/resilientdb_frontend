@@ -19,6 +19,8 @@ import {
   faEdit,
   faTrash,
   faCheckCircle,
+  faUserCheck,
+  faBan,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
@@ -66,6 +68,69 @@ class DocCard extends Component {
     this.setState({ redirect: true });
   };
 
+  confirm = () => {
+    const headers = {
+      "Content-Type": "application/json",
+      "x-access-token": localStorage.getItem("token"),
+    };
+    const data = {
+      _id: this.props.docData._id,
+    };
+    axios
+      .post("http://localhost:3001/document/approve", data, {
+        headers: headers,
+      })
+      .then((response) => {
+        console.log(response);
+        this.props.refresh({ target: { id: this.props.mode } });
+      });
+  };
+
+  reject = () => {
+    const headers = {
+      "Content-Type": "application/json",
+      "x-access-token": localStorage.getItem("token"),
+    };
+    const data = {
+      _id: this.props.docData._id,
+    };
+    axios
+      .post("http://localhost:3001/document/reject", data, {
+        headers: headers,
+      })
+      .then((response) => {
+        console.log(response);
+        this.props.refresh({ target: { id: this.props.mode } });
+      });
+  };
+
+  delete = () => {
+    const headers = {
+      "Content-Type": "application/json",
+      "x-access-token": localStorage.getItem("token"),
+    };
+    axios
+      .get(
+        "http://localhost:3001/document/delete?id=" + this.props.docData._id,
+        {
+          headers: headers,
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        this.props.refresh({ target: { id: this.props.mode } });
+      });
+  };
+
+  checkApproved = () => {
+    this.props.docData.approved_by.forEach((element) => {
+      if (localStorage.getItem("_id") == element._id) {
+        return false;
+      }
+    });
+    return true;
+  };
+
   handleVerify = (e) => {
     e.preventDefault();
     if (this.state.selectedFile) {
@@ -106,7 +171,11 @@ class DocCard extends Component {
       <div style={{ margin: "0 32px" }}>
         <Card body color="dark" inverse>
           <CardBody>
-            <CardTitle tag="h5" onClick={this.toggle}>
+            <CardTitle
+              tag="h5"
+              onClick={this.toggle}
+              style={{ cursor: "pointer" }}
+            >
               {this.props.docData.name}
             </CardTitle>
             <Collapse isOpen={this.state.isOpen}>
@@ -142,18 +211,30 @@ class DocCard extends Component {
                 marginTop: "32px",
               }}
             >
-              <FontAwesomeIcon
-                size="2x"
-                icon={faCheckCircle}
-                onClick={this.toggleVerify}
-              />
+              {this.props.mode == "Confirmed" && (
+                <FontAwesomeIcon
+                  size="2x"
+                  icon={faCheckCircle}
+                  onClick={this.toggleVerify}
+                />
+              )}
+              {this.props.mode == "Pending" && this.checkApproved() && (
+                <FontAwesomeIcon
+                  size="2x"
+                  icon={faUserCheck}
+                  onClick={this.confirm}
+                />
+              )}
+              {this.props.mode == "Pending" && (
+                <FontAwesomeIcon size="2x" icon={faBan} onClick={this.reject} />
+              )}
               <FontAwesomeIcon
                 size="2x"
                 icon={faCloudDownloadAlt}
                 onClick={this.download}
               />
               <FontAwesomeIcon size="2x" icon={faEdit} onClick={this.edit} />
-              <FontAwesomeIcon size="2x" icon={faTrash} />
+              <FontAwesomeIcon size="2x" icon={faTrash} onClick={this.delete} />
             </div>
           </CardBody>
         </Card>
